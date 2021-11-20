@@ -4,6 +4,10 @@ plugins {
     id 'kotlin-kapt'
 }
 
+apply plugin: 'com.android.application'
+
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdk 30
 
@@ -40,6 +44,8 @@ dependencies {
     def playservices_version = '16.0.0'
     implementation "com.google.android.gms:play-services-location:$playservices_version"
 
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+
     def coroutines_version = '1.0.1'
     def lifecycle_version = '2.0.0'
 
@@ -59,4 +65,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'org.jetbrains.anko:anko-common:0.9'
+
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
 }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "501855999097",
+    "project_id": "ep2-movel",
+    "storage_bucket": "ep2-movel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501855999097:android:1f90d6652e20fc38d6b0a8",
+        "android_client_info": {
+          "package_name": "br.com.raulreis.recipe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501855999097-5dtva6lssbsvov6vcec4dgdps2hs1p91.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.raulreis.recipe",
+            "certificate_hash": "96b8380b9a99b37a984f44cae3970cfa91091f99"
+          }
+        },
+        {
+          "client_id": "501855999097-0rdgmfv05u7rbqhvt9ueqa1grraaaf67.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO7cE7Cr0fbmaaYWpY7VWBI7UOcnKIUVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501855999097-0rdgmfv05u7rbqhvt9ueqa1grraaaf67.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
