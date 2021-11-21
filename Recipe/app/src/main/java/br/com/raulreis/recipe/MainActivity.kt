@@ -4,6 +4,7 @@ package br.com.raulreis.recipe
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.bumptech.glide.Glide
 
 
 class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -133,6 +135,11 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
         super.onStart()
         if (mGoogleApiClient != null)
             mGoogleApiClient!!.connect()
+
+        val currentUser = auth.currentUser
+        binding.nome.text = currentUser?.displayName
+        binding.email.text = currentUser?.email
+        Glide.with(this).load(currentUser?.photoUrl).into(binding.profileImage)
     }
 
     override fun onDestroy() {
