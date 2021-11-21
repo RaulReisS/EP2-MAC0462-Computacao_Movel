@@ -1,15 +1,20 @@
 package br.com.raulreis.recipe
 
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import br.com.raulreis.recipe.Common.Common
+import br.com.raulreis.recipe.Common.Helper
+import br.com.raulreis.recipe.Model.OpenWeatherMap
 import br.com.raulreis.recipe.databinding.ActivityMainBinding
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GooglePlayServicesUtil
@@ -21,6 +26,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
 
 
 class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -31,6 +39,7 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
 
     var mGoogleApiClient : GoogleApiClient? = null
     var mLocationRequest: LocationRequest? = null
+    internal var openWetaherMap = OpenWeatherMap()
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
@@ -129,6 +138,7 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
 
     override fun onLocationChanged(p0: Location?) {
         binding.txvTeste.text = "Lat: ${p0!!.latitude}\nLong: ${p0!!.longitude}"
+        GetWeather().execute(Common.apiRequest(p0!!.latitude.toString(), p0!!.longitude.toString()))
     }
 
     override fun onStart() {
@@ -150,5 +160,51 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
     override fun onResume() {
         super.onResume()
         checkPlayService()
+    }
+
+    private inner class GetWeather : AsyncTask<String, Void, String>()
+    {
+        internal var pd = ProgressDialog(this@MainActivity)
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+            pd.setTitle("Please wait...")
+            pd.show()
+        }
+
+        override fun doInBackground(vararg params: String?): String {
+            var stream : String? = null
+            var urlString = params[0]
+
+            val http = Helper()
+            stream = http.getGTTPData(urlString)
+            return stream!!
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            if (result!!.contains("Error: Not found city")) {
+                pd.dismiss()
+                return
+            }
+            val gson = Gson()
+            val mType = object : TypeToken<OpenWeatherMap>(){}.type
+
+            openWetaherMap = gson.fromJson<OpenWeatherMap>(result, mType)
+            pd.dismiss()
+
+            // Ajustar a informação na interface
+            binding.txvCity.text = "${openWetaherMap.name}"
+            binding.txvLastUpdate.text = "Last Update: ${Common.dateNow}"
+            binding.txvDescription.text = "${openWetaherMap.weather!![0].description}"
+            binding.txvTime.text = "Preguiça"
+            binding.txvHumidity.text = "${openWetaherMap.main!!.humidity}"
+            binding.txvCelsius.text = "${openWetaherMap.main!!.temp}"
+            Picasso.with(this@MainActivity)
+                .load(Common.getImage(openWetaherMap.weather!![0].icon!!))
+                .into(binding.imgIcon)
+
+        }
+
     }
 }

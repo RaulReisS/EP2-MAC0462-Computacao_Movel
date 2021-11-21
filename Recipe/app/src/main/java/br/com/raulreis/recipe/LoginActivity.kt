@@ -96,4 +96,9 @@ class LoginActivity : AppCompatActivity() {
         private const val TAG = "LoginActivity"
         private const val RC_SIGN_IN = 9001
     }
+
+    fun entrar(view: android.view.View) {
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
+    }
 }
