@@ -2,6 +2,7 @@ package br.com.raulreis.recipe
 
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -49,6 +50,10 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        binding.txvHistory.setOnClickListener {
+            startActivity(Intent(this@MainActivity, HistoryActivity::class.java))
+        }
 
         requestPermission()
         if (checkPlayService())
@@ -137,7 +142,6 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
     }
 
     override fun onLocationChanged(p0: Location?) {
-        binding.txvTeste.text = "Lat: ${p0!!.latitude}\nLong: ${p0!!.longitude}"
         GetWeather().execute(Common.apiRequest(p0!!.latitude.toString(), p0!!.longitude.toString()))
     }
 
@@ -168,7 +172,7 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
 
         override fun onPreExecute() {
             super.onPreExecute()
-            pd.setTitle("Please wait...")
+            pd.setTitle("Carregando")
             pd.show()
         }
 
@@ -195,16 +199,29 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
 
             // Ajustar a informação na interface
             binding.txvCity.text = "${openWetaherMap.name}"
-            binding.txvLastUpdate.text = "Last Update: ${Common.dateNow}"
-            binding.txvDescription.text = "${openWetaherMap.weather!![0].description}"
-            binding.txvTime.text = "Preguiça"
-            binding.txvHumidity.text = "${openWetaherMap.main!!.humidity}"
-            binding.txvCelsius.text = "${openWetaherMap.main!!.temp}"
+            binding.txvDescription.text = "${openWetaherMap.weather!![0].description!!.capitalize()}"
+            binding.txvCelsius.text = "${openWetaherMap.main!!.temp} °C"
             Picasso.with(this@MainActivity)
                 .load(Common.getImage(openWetaherMap.weather!![0].icon!!))
                 .into(binding.imgIcon)
 
+            val sharedPrefs = getSharedPreferences("HISTORICO", Context.MODE_PRIVATE)
+            var count = sharedPrefs.getInt("COUNT", 0)
+            val editPrefs = sharedPrefs.edit()
+
+            count += 1
+            editPrefs.putString("name_$count", "${openWetaherMap.name}")
+            editPrefs.putString("update_$count", "${Common.dateNow}")
+            editPrefs.putString("temp_$count", "${openWetaherMap.main!!.temp} °C")
+            editPrefs.putInt("COUNT", count)
+
+            editPrefs.apply()
+
         }
 
+    }
+
+    fun goRecipe(view: android.view.View) {
+        startActivity(Intent(this@MainActivity, RecipeActivity::class.java))
     }
 }

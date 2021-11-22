@@ -10,7 +10,13 @@
         android:id="@+id/nome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="Raul Reis Soares"
         android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,25 +24,49 @@
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:layout_marginTop="8dp"
+        android:text="raul.soares@usp.br"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/nome"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/nome"
         app:layout_constraintTop_toBottomOf="@+id/nome" />
 
-    <ImageView
-        android:id="@+id/profileImage"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        app:layout_constraintStart_toStartOf="@+id/nome"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="35dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:circularflow_defaultRadius="50dp"
+            app:srcCompat="@color/blue" />
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btnLoginEntrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:onClick="logout"
+        app:backgroundTint="@color/secondary_Dark"
+        android:textColor="@color/white"
         android:text="Logout"
+        android:textColorHighlight="#5C3131"
+        android:textColorLink="@color/white"
         android:textSize="24sp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -44,86 +74,77 @@
         android:id="@+id/txvCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/txvLastUpdate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="16dp"
+        android:text="Lapa"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/CardView"
+        app:layout_constraintEnd_toEndOf="@+id/txvDescription"
+        app:layout_constraintStart_toStartOf="@+id/txvDescription"
+        app:layout_constraintTop_toBottomOf="@+id/txvDescription" />
 
-    <TextView
-        android:id="@+id/txvLastUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/imgIcon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvCity" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CardView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="80dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/email">
 
-    <ImageView
-        android:id="@+id/imgIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txvDescription"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvLastUpdate"
-        app:srcCompat="@drawable/ic_baseline_food_bank_24" />
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/primary_Light"
+            app:srcCompat="@drawable/ic_baseline_food_bank_24" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/txvDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/txvHumidity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgIcon" />
-
-    <TextView
-        android:id="@+id/txvHumidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/txvTime"
-        app:layout_constraintTop_toBottomOf="@+id/txvDescription"
-        tools:layout_editor_absoluteX="179dp" />
-
-    <TextView
-        android:id="@+id/txvTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/txvCelsius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvHumidity" />
+        android:layout_marginTop="8dp"
+        android:text="nublado"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/txvCelsius"
+        app:layout_constraintStart_toStartOf="@+id/txvCelsius"
+        app:layout_constraintTop_toBottomOf="@+id/txvCelsius" />
 
     <TextView
         android:id="@+id/txvCelsius"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/txvTeste"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvTime" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="20.62°"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toEndOf="@+id/CardView"
+        app:layout_constraintTop_toTopOf="@+id/CardView" />
 
     <TextView
-        android:id="@+id/txvTeste"
+        android:id="@+id/txvHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="Ver histórico"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/CardView"
+        app:layout_constraintTop_toBottomOf="@+id/CardView" />
+
+    <Button
+        android:id="@+id/btnReceita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receita"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:backgroundTint="@color/secondary_Dark"
+        app:layout_constraintBottom_toTopOf="@+id/btnLoginEntrar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvCelsius" />
+        android:onClick="goRecipe"
+        app:layout_constraintTop_toBottomOf="@+id/txvHistory" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
